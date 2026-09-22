@@ -3,20 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Portal</title>
+    <title>Video Collection</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { background: #121212; color: white; text-align: center; font-family: Arial; padding-top: 50px; }
-        .btn { display: inline-block; padding: 15px 30px; background: #e50914; color: white; text-decoration: none; font-weight: bold; border-radius: 8px; margin-top: 20px; }
+        body { background-color: #121212; color: #ffffff; font-family: Arial, sans-serif; text-align: center; padding: 20px 10px; margin: 0; }
+        .card { background-color: #1e1e1e; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        h4 { margin: 5px 0 15px 0; color: #ffca28; }
+        .btn { display: block; width: 90%; margin: 10px auto; padding: 12px 0; font-size: 15px; font-weight: bold; border-radius: 6px; text-decoration: none; cursor: pointer; border: none; }
+        .unlock-btn { background-color: #e50914; color: white; }
+        .download-btn { background-color: #28a745; color: white; display: none; }
     </style>
 </head>
 <body>
-    <h2>ভিডিও দেখতে নিচের বোতামে ক্লিক করুন</h2>
-    <!-- আপনার Monetag Direct Link নিচে বসাবেন -->
-    <a href="https://omg10.com/4/11749433" class="btn" target="_blank">▶ Watch Now</a>
+
+    <h2>🎬 All Latest Videos</h2>
+
+    <!-- ভিডিও ১ -->
+    <div class="card">
+        <h4>Video 1: Exclusive Collection</h4>
+        <button id="unlockBtn1" class="btn unlock-btn" onclick="watchAd(1)">🔓 Unlock Video (0/3)</button>
+        <a id="downloadBtn1" href="https://t.me/YOUR_CHANNEL_LINK_1" class="btn download-btn" target="_blank">👉 Join & Watch Video 1</a>
+    </div>
+
+    <!-- ভিডিও ২ -->
+    <div class="card">
+        <h4>Video 2: New Viral Clip</h4>
+        <button id="unlockBtn2" class="btn unlock-btn" onclick="watchAd(2)">🔓 Unlock Video (0/3)</button>
+        <a id="downloadBtn2" href="https://t.me/YOUR_CHANNEL_LINK_2" class="btn download-btn" target="_blank">👉 Join & Watch Video 2</a>
+    </div>
+
+    <!-- ভিডিও ৩ -->
+    <div class="card">
+        <h4>Video 3: Trending Video</h4>
+        <button id="unlockBtn3" class="btn unlock-btn" onclick="watchAd(3)">🔓 Unlock Video (0/3)</button>
+        <a id="downloadBtn3" href="https://t.me/YOUR_CHANNEL_LINK_3" class="btn download-btn" target="_blank">👉 Join & Watch Video 3</a>
+    </div>
 
     <script>
         window.Telegram.WebApp.expand();
+        const monetagAdLink = "https://omg10.com/4/11749433";
+        let adCounts = { 1: 0, 2: 0, 3: 0 };
+
+        function watchAd(id) {
+            if (adCounts[id] < 3) {
+                window.open(monetagAdLink, '_blank');
+                adCounts[id]++;
+                
+                const btn = document.getElementById('unlockBtn' + id);
+                btn.innerText = `🔓 Unlock Video (${adCounts[id]}/3)`;
+
+                if (adCounts[id] === 3) {
+                    btn.style.display = "none";
+                    document.getElementById('downloadBtn' + id).style.display = "block";
+                }
+            }
+        }
     </script>
 </body>
 </html>
