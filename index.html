@@ -1,625 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>OC • POINT — Video Hub</title>
 
-  <title>Aetheria Rewards</title>
+<!-- Telegram Mini App -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <!-- Telegram Mini App -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<!-- Monetag rewarded-interstitial SDK -->
+<script data-cfasync="false"
+        src="//libtl.com/sdk.js"
+        data-zone="11865765"
+        data-sdk="show_11865765"></script>
 
-  <!-- Monetag -->
-  <script src="//libtl.com/sdk.js"
-          data-zone="11865765"
-          data-sdk="show_11865765"></script>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at 50% -10%, #252052, #090910 48%, #050507);
-      color: #fff;
-      min-height: 100vh;
-    }
-
-    button, a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .app {
-      width: min(100%, 460px);
-      min-height: 100vh;
-      margin: auto;
-      padding: 18px 16px 30px;
-    }
-
-    /* HEADER */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 22px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
-
-    .logo {
-      width: 46px;
-      height: 46px;
-      border-radius: 15px;
-      display: grid;
-      place-items: center;
-      font-size: 21px;
-      font-weight: 800;
-      background: linear-gradient(135deg,#8b5cf6,#06b6d4);
-      box-shadow: 0 0 28px rgba(124,58,237,.35);
-    }
-
-    .brand b {
-      font-size: 17px;
-    }
-
-    .brand small {
-      display: block;
-      color: #858593;
-      margin-top: 3px;
-      font-size: 11px;
-    }
-
-    .user {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: #171720;
-      border: 1px solid #292936;
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      color: #c4b5fd;
-    }
-
-    /* BALANCE */
-    .balance {
-      text-align: center;
-      padding: 26px 15px;
-      border-radius: 25px;
-      border: 1px solid rgba(139,92,246,.25);
-      background: linear-gradient(
-        145deg,
-        rgba(124,58,237,.20),
-        rgba(6,182,212,.07)
-      );
-      margin-bottom: 18px;
-    }
-
-    .balance small {
-      color: #9696a3;
-    }
-
-    .points {
-      font-size: 42px;
-      font-weight: 800;
-      margin: 7px 0;
-    }
-
-    .points span {
-      color: #a78bfa;
-    }
-
-    .active {
-      display: inline-block;
-      padding: 5px 10px;
-      border-radius: 20px;
-      background: rgba(34,197,94,.10);
-      color: #4ade80;
-      font-size: 10px;
-    }
-
-    /* CARD */
-    .card {
-      background: rgba(17,17,25,.92);
-      border: 1px solid #252532;
-      border-radius: 21px;
-      padding: 20px;
-      margin-bottom: 15px;
-    }
-
-    .card h2 {
-      font-size: 19px;
-      margin-bottom: 7px;
-    }
-
-    .card p {
-      color: #858593;
-      font-size: 13px;
-      line-height: 1.55;
-      margin-bottom: 17px;
-    }
-
-    /* CTA */
-    .cta {
-      display: block;
-      width: 100%;
-      padding: 16px;
-      border-radius: 14px;
-      text-align: center;
-      text-decoration: none;
-      color: #fff;
-      font-weight: 800;
-      font-size: 15px;
-      background: linear-gradient(90deg,#7c3aed,#0891b2);
-      box-shadow: 0 10px 28px rgba(124,58,237,.23);
-    }
-
-    .note {
-      text-align: center;
-      color: #686875;
-      font-size: 10px;
-      margin-top: 9px;
-    }
-
-    /* TASKS */
-    .title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 23px 2px 11px;
-    }
-
-    .title h3 {
-      font-size: 17px;
-    }
-
-    .title span {
-      color: #696975;
-      font-size: 11px;
-    }
-
-    .task {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #111119;
-      border: 1px solid #242430;
-      border-radius: 17px;
-      padding: 14px;
-      margin-bottom: 9px;
-    }
-
-    .task-icon {
-      width: 42px;
-      height: 42px;
-      flex-shrink: 0;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: #1c1c28;
-      font-size: 18px;
-    }
-
-    .task-info {
-      flex: 1;
-    }
-
-    .task-info b {
-      font-size: 13px;
-    }
-
-    .task-info small {
-      display: block;
-      color: #71717d;
-      margin-top: 4px;
-      font-size: 10px;
-    }
-
-    .task-btn {
-      border: 0;
-      border-radius: 10px;
-      padding: 9px 12px;
-      background: #242437;
-      color: #bda8ff;
-      font-weight: 700;
-      font-size: 11px;
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      color: #4e4e59;
-      font-size: 10px;
-      margin-top: 28px;
-    }
-  </style>
+<style>
+:root{
+  --bg:#090511;--panel:#10091b;--panel2:#160d24;--line:#34204a;
+  --text:#f6f0ff;--muted:#a79ab7;--purple:#b45cff;--purple2:#8d35e9;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:Arial,system-ui,sans-serif}
+body{min-height:100vh;background-image:
+ linear-gradient(rgba(180,92,255,.035) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(180,92,255,.035) 1px,transparent 1px);
+ background-size:64px 64px}
+button,a{font:inherit;-webkit-tap-highlight-color:transparent}
+.app{max-width:760px;margin:auto;min-height:100vh;padding-bottom:40px}
+.top{height:72px;display:flex;align-items:center;gap:16px;padding:0 18px;
+ border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;
+ background:rgba(9,5,17,.94);backdrop-filter:blur(14px)}
+.iconbtn{width:42px;height:42px;border:0;background:transparent;color:white;font-size:29px}
+.logo{flex:1;text-align:center;font-size:25px;font-weight:900;letter-spacing:-1px}
+.logo span{color:#bd67ff}
+.search{width:42px;height:42px;border:1px solid #3a2351;border-radius:50%;background:#1a0c2a;color:white;font-size:21px}
+.tabs{display:flex;gap:9px;flex-wrap:wrap;padding:20px 18px 10px}
+.tab{border:1px solid #40245a;background:#120a1d;color:#f2eaff;padding:10px 16px;border-radius:999px}
+.tab.active{background:linear-gradient(90deg,#9e42f5,#c16aff);border-color:transparent}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:18px}
+.card{background:rgba(17,9,27,.92);border:1px solid #34204a;border-radius:24px;overflow:hidden;box-shadow:0 12px 35px rgba(0,0,0,.22)}
+.thumb{width:100%;aspect-ratio:1.25/1;object-fit:cover;display:block}
+.cardbody{padding:14px}
+.cardtitle{font-size:15px;font-weight:800;line-height:1.35;margin-bottom:10px}
+.meta{display:flex;justify-content:space-between;color:#bba9ca;font-size:12px}
+.open{width:100%;margin-top:12px;border:0;border-radius:12px;padding:11px;background:linear-gradient(90deg,#963ef0,#bd63ff);color:white;font-weight:800}
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;z-index:50}
+.drawer.open{display:block}
+.drawerpanel{width:min(86%,390px);height:100%;background:#0b0613;border-right:1px solid #39214e;padding:25px 20px}
+.drawerhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+.drawer h2{font-size:24px}.close{background:none;border:0;color:#888;font-size:28px}
+.nav{display:block;padding:15px 8px;color:#d9c5ec;text-decoration:none;font-size:18px;border-radius:12px}
+.nav:hover{background:#1b0d2a}.social{margin-top:28px;color:#777;text-transform:uppercase;font-size:12px;letter-spacing:2px}
+.detail{display:none;padding:18px}.detail.show{display:block}.home.hide{display:none}
+.back{border:0;background:none;color:#d7b7ff;font-size:26px;margin-bottom:12px}
+.hero{border:1px solid #38204e;border-radius:22px;overflow:hidden;background:#10091b}
+.hero img{width:100%;display:block;max-height:430px;object-fit:cover}
+.detailbody{padding:18px}.detailtitle{font-size:24px;color:#c678ff;line-height:1.2;margin-bottom:12px}
+.desc{color:#c6b6d3;line-height:1.65;font-size:14px}
+.unlockbox{margin-top:20px;padding:18px;border:1px solid #3b2452;border-radius:20px;background:#130b20}
+.progress{height:9px;background:#2b1a3b;border-radius:999px;overflow:hidden;margin:12px 0}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#8c38eb,#ca6bff);transition:.3s}
+.unlock{width:100%;padding:15px;border:0;border-radius:15px;background:linear-gradient(90deg,#a645f3,#c16aff);color:white;font-weight:900}
+.unlock:disabled{opacity:.5}
+.adnote{text-align:center;color:#8e7b9c;font-size:11px;margin-top:8px}
+.watchmore{width:100%;margin-top:15px;padding:14px;border:0;border-radius:15px;background:#21102f;color:#e8d7f5;font-weight:800}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;
+ background:#21132e;border:1px solid #4b2c65;color:#fff;padding:13px 16px;border-radius:14px;z-index:100;
+ transition:.2s;width:min(90%,420px);text-align:center;font-size:13px}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.logo{font-size:22px}}
+</style>
 </head>
-
 <body>
 
 <div class="app">
-
-  <header class="header">
-
-    <div class="brand">
-      <div class="logo">A</div>
-
-      <div>
-        <b>Aetheria</b>
-        <small>Reward Center</small>
-      </div>
-    </div>
-
-    <div class="user" id="avatar">A</div>
-
+  <header class="top">
+    <button class="iconbtn" id="menuBtn">☰</button>
+    <div class="logo">OC <span>• POINT</span></div>
+    <button class="search" id="searchBtn">⌕</button>
   </header>
 
-
-  <!-- BALANCE -->
-
-  <section class="balance">
-
-    <small>Your Points</small>
-
-    <div class="points">
-      <span id="points">0</span> ✦
-    </div>
-
-    <div class="active">
-      ● Account Active
-    </div>
-
-  </section>
-
-
-  <!-- REWARD -->
-
-  <section class="card">
-
-    <h2>🎁 Daily Reward</h2>
-
-    <p>
-      Complete today's activity and continue to the reward page.
-    </p>
-
-    <!-- Monetag SmartLink -->
-    <a
-      class="cta"
-      href="https://omg10.com/4/11749433"
-      target="_blank"
-      rel="noopener noreferrer">
-      🚀 Continue
-    </a>
-
-    <div class="note">
-      Reward activity • Powered by Aetheria
-    </div>
-
-  </section>
-
-
-  <!-- TASKS -->
-
-  <div class="title">
-    <h3>Daily Tasks</h3>
-    <span>Today</span>
-  </div>
-
-
-  <div class="task">
-
-    <div class="task-icon">🎯</div>
-
-    <div class="task-info">
-      <b>Daily Check-in</b>
-      <small>Available every day</small>
-    </div>
-
-    <button class="task-btn" onclick="dailyCheckin()">
-      CHECK
-    </button>
-
-  </div>
-
-
-  <div class="task">
-
-    <div class="task-icon">👥</div>
-
-    <div class="task-info">
-      <b>Invite Friends</b>
-      <small>Share your referral link</small>
-    </div>
-
-    <button class="task-btn" onclick="shareApp()">
-      SHARE
-    </button>
-
-  </div>
-
-
-  <div class="task">
-
-    <div class="task-icon">ℹ️</div>
-
-    <div class="task-info">
-      <b>Account</b>
-      <small id="username">Telegram User</small>
-    </div>
-
-    <button class="task-btn" onclick="showUser()">
-      VIEW
-    </button>
-
-  </div>
-
-
-  <footer>
-    Aetheria Rewards • 2026
-  </footer>
-
-</div>
-
-
-<script>
-
-  /* Telegram */
-
-  const tg = window.Telegram?.WebApp;
-
-  if (tg) {
-    tg.ready();
-    tg.expand();
-
-    // Telegram theme
-    if (tg.setHeaderColor) {
-      tg.setHeaderColor("#090910");
-    }
-
-    if (tg.setBackgroundColor) {
-      tg.setBackgroundColor("#090910");
-    }
-  }
-
-
-  /* USER */
-
-  const telegramUser =
-    tg?.initDataUnsafe?.user || null;
-
-  if (telegramUser) {
-
-    const name =
-      telegramUser.first_name ||
-      telegramUser.username ||
-      "User";
-
-    document.getElementById("username").        </div>
-    </div>
-
-    <script>
-        // Telegram WebApp Expand
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.expand();
-        }
-
-        // Tracking Ads Count
-        </div>
-    </div>
-
-    <script>
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.expand();
-        }
-
-        let adCounts = { 1            color: #ffffff;
-            border: none;
-        }
-
-        /* Video Feed Container */
-        .feed {
-            padding: 0 15px;
-        }
-
-        /* Video Card Style */
-        .video-card {
-            background-color: #120c24;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border: 1px solid #1e1538;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-        }
-
-        .thumbnail-box {
-            position: relative;
-            width: 100%;
-            height: 210px;
-        }
-
-        .thumbnail-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .clip-badge {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.75);
-            color: #fff;
-            font-size: 12px;
-            padding: 4px 10px;
-            border-radius: 12px;
-            backdrop-filter: blur(4px);
-        }
-
-        .card-details {
-            padding: 15px;
-        }
-
-        .video-title {
-            font-size: 15px;
-            font-weight: 600;
-            line-height: 1.4;
-            color: #f3e8ff;
-            margin-bottom: 12px;
-        }
-
-        .action-area {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .unlock-btn {
-            width: 100%;
-            background: linear-gradient(90deg, #9333ea, #c084fc);
-            color: #ffffff;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: 0 2px 10px rgba(147, 51, 234, 0.3);
-        }
-
-        .download-btn {
-            display: none;
-            width: 100%;
-            background: linear-gradient(90deg, #16a34a, #22c55e);
-            color: #ffffff;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 14px;
-            text-align: center;
-            text-decoration: none;
-            box-shadow: 0 2px 10px rgba(34, 197, 94, 0.3);
-        }
-
-        .stats-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 12px;
-            color: #9ca3af;
-            font-size: 13px;
-        }
-
-        .stats-left {
-            display: flex;
-            gap: 15px;
-        }
-
-        /* Sidebar Navigation Menu */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -260px;
-            width: 250px;
-            height: 100%;
-            background-color: #0b0618;
-            border-right: 1px solid #1f1638;
-            z-index: 1000;
-            transition: 0.3s ease;
-            padding: 20px;
-        }
-
-        .sidebar.open {
-            left: 0;
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 20px;
-        }
-
-        .sidebar-menu a {
-            color: #d8b4fe;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            z-index: 999;
-        }
-
-        .overlay.active {
-            display: block;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Overlay -->
-    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-    <!-- Sidebar Menu -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar    <!-- ভিডিও ৩ -->
-    <div class="card">
-        <h4>Video 3: Trending Video</h4>
-        <button id="unlockBtn3" class="btn unlock-btn" onclick="watchAd(3)">🔓 Unlock Video (0/3)</button>
-        <a id="downloadBtn3" href="https://t.me/c/4329787930/6" class="btn download-btn" target="_blank">👉 Join & Watch Video 3</a>
-    </div>
-
-    <script>
-        window.Telegram.WebApp.expand();
-        const monetagAdLink = "https://omg10.com/4/11749433";
-        let adCounts = { 1: 0, 2: 0, 3: 0 };
-
-        function watchAd(id) {
-            if (adCounts[id] < 3) {
-                window.open(monetagAdLink, '_blank');
-                adCounts[id]++;
-                
-                const btn = document.getElementById('unlockBtn' + id);
-                btn.innerText = `🔓 Unlock Video (${adCounts[id]}/3)`;
-
-                if (adCounts[id] === 3) {
-                    btn.style.display = "none";
-                    document.getElementById('downloadBtn' + id).style.display = "block";
-                }
-            }
-        }
-    </script>
-</body>
-</html>
+  <main id="home" class="home">
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-cat="All Videos">?
