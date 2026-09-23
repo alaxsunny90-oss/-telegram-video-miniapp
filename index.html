@@ -15,100 +15,108 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: #0b0716; color: #ffffff; padding-bottom: 30px; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px; background-color: #0d081b; border-bottom: 1px solid #1a1528; position: sticky; top: 0; z-index: 100; }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .menu-btn { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; }
+        .logo { font-size: 18px; font-weight: 800; color: #a855f7; letter-spacing: 1px; }
+        .header-right { display: flex; gap: 15px; }
+        .icon-btn { background: #1a132f; border: none; color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .category-container { display: flex; gap: 8px; overflow-x: auto; padding: 15px; white-space: nowrap; scrollbar-width: none; }
+        .category-container::-webkit-scrollbar { display: none; }
+        .tag { background-color: #161029; color: #d8b4fe; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid #281d45; cursor: pointer; }
+        .tag.active { background: linear-gradient(135deg, #a855f7, #7e22ce); color: #ffffff; border: none; }
+        .feed { padding: 0 15px; }
+        .video-card { background-color: #120c24; border-radius: 16px; overflow: hidden; margin-bottom: 20px; border: 1px solid #1e1538; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        .thumbnail-box { position: relative; width: 100%; height: 210px; }
+        .thumbnail-box img { width: 100%; height: 100%; object-fit: cover; }
+        .clip-badge { position: absolute; bottom: 10px; right: 10px; background: rgba(0, 0, 0, 0.75); color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 12px; }
+        .card-details { padding: 15px; }
+        .video-title { font-size: 15px; font-weight: 600; color: #f3e8ff; margin-bottom: 12px; line-height: 1.4; }
+        .action-area { display: flex; flex-direction: column; gap: 10px; }
+        .unlock-btn { width: 100%; background: linear-gradient(90deg, #9333ea, #c084fc); color: #ffffff; padding: 12px; border: none; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .download-btn { display: none; width: 100%; background: linear-gradient(90deg, #16a34a, #22c55e); color: #ffffff; padding: 12px; border: none; border-radius: 10px; font-weight: 700; font-size: 14px; text-align: center; text-decoration: none; }
+        .stats-bar { display: flex; justify-content: space-between; margin-top: 12px; color: #9ca3af; font-size: 13px; }
+        .stats-left { display: flex; gap: 15px; }
+        .sidebar { position: fixed; top: 0; left: -260px; width: 250px; height: 100%; background-color: #0b0618; border-right: 1px solid #1f1638; z-index: 1000; transition: 0.3s ease; padding: 20px; }
+        .sidebar.open { left: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 20px; }
+        .sidebar-menu a { color: #d8b4fe; text-decoration: none; font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; z-index: 999; }
+        .overlay.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="logo">⚡ MENU</span>
+            <button class="menu-btn" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="#"><i class="fa-solid fa-fire"></i> Trending</a></li>
+        </ul>
+    </div>
+
+    <div class="top-bar">
+        <div class="header-left">
+            <button class="menu-btn" onclick="openSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div class="logo">UNLIMITED V!DS</div>
+        </div>
+        <div class="header-right">
+            <button class="icon-btn"><i class="fa-solid fa-moon"></i></button>
+            <button class="icon-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
+
+    <div class="category-container">
+        <div class="tag active">🎬 All Videos</div>
+        <div class="tag">New Collection</div>
+        <div class="tag">Indian collection</div>
+    </div>
+
+    <div class="feed">
+        <!-- Video Card 1 -->
+        <div class="video-card">
+            <div class="thumbnail-box">
+                <img src="https://via.placeholder.com/400x210/2e1065/ffffff?text=Video+Thumbnail+1" alt="Thumbnail">
+                <div class="clip-badge">5 clips</div>
+            </div>
+            <div class="card-details">
+                <div class="video-title">‼️ ভাইরাল নার্স আপু ভিডিও কলে ডাক্তার ভায়াকে দেখাচ্ছে!! দেখলেই মাল পড়ে যাবে 🍑</div>
+                
+                <div class="action-area">
+                    <button id="unlockBtn1" class="unlock-btn" onclick="watchAd(1)">
+                        <i class="fa-solid fa-lock"></i> UNLOCK VIDEO (0/3)
+                    </button>
+                    <a id="downloadBtn1" href="https://t.me/YOUR_TELEGRAM_LINK_1" class="download-btn" target="_blank">
+                        <i class="fa-solid fa-play"></i> WATCH FULL VIDEO
+                    </a>
+                </div>
+
+                <div class="stats-bar">
+                    <div class="stats-left">
+                        <span><i class="fa-solid fa-heart" style="color:#e11d48;"></i> 5</span>
+                        <span><i class="fa-solid fa-eye"></i> 260</span>
+                    </div>
+                    <div><i class="fa-solid fa-share-nodes"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.expand();
         }
 
-        body {
-            background-color: #0b0716;
-            color: #ffffff;
-            padding-bottom: 30px;
-        }
-
-        /* Top Header Navigation */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background-color: #0d081b;
-            border-bottom: 1px solid #1a1528;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .menu-btn {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .logo {
-            font-size: 18px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: #a855f7;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .icon-btn {
-            background: #1a132f;
-            border: none;
-            color: #fff;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        /* Category Scroll Bar */
-        .category-container {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding: 15px;
-            white-space: nowrap;
-            scrollbar-width: none;
-        }
-
-        .category-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tag {
-            background-color: #161029;
-            color: #d8b4fe;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            border: 1px solid #281d45;
-            cursor: pointer;
-        }
-
-        .tag.active {
-            background: linear-gradient(135deg, #a855f7, #7e22ce);
-            color: #ffffff;
+        let adCounts = { 1            color: #ffffff;
             border: none;
         }
 
