@@ -1,85 +1,202 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="bn">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Video • POINT — Video Hub</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earn Zone Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-color: #f8fafc;
+            --gold-color: #f59e0b;
+            --green-color: #22c55e;
+        }
 
-<!-- Telegram Mini App -->
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
 
-<!-- Monetag rewarded-interstitial SDK -->
-<script data-cfasync="false"
-        src="//libtl.com/sdk.js"
-        data-zone="11865765"
-        data-sdk="show_11865765"></script>
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 70px;
+        }
 
-<style>
-:root{
-  --bg:#090511;--panel:#10091b;--panel2:#160d24;--line:#34204a;
-  --text:#f6f0ff;--muted:#a79ab7;--purple:#b45cff;--purple2:#8d35e9;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--text);font-family:Arial,system-ui,sans-serif}
-body{min-height:100vh;background-image:
- linear-gradient(rgba(180,92,255,.035) 1px,transparent 1px),
- linear-gradient(90deg,rgba(180,92,255,.035) 1px,transparent 1px);
- background-size:64px 64px}
-button,a{font:inherit;-webkit-tap-highlight-color:transparent}
-.app{max-width:760px;margin:auto;min-height:100vh;padding-bottom:40px}
-.top{height:72px;display:flex;align-items:center;gap:16px;padding:0 18px;
- border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;
- background:rgba(9,5,17,.94);backdrop-filter:blur(14px)}
-.iconbtn{width:42px;height:42px;border:0;background:transparent;color:white;font-size:29px}
-.logo{flex:1;text-align:center;font-size:25px;font-weight:900;letter-spacing:-1px}
-.logo span{color:#bd67ff}
-.search{width:42px;height:42px;border:1px solid #3a2351;border-radius:50%;background:#1a0c2a;color:white;font-size:21px}
-.tabs{display:flex;gap:9px;flex-wrap:wrap;padding:20px 18px 10px}
-.tab{border:1px solid #40245a;background:#120a1d;color:#f2eaff;padding:10px 16px;border-radius:999px}
-.tab.active{background:linear-gradient(90deg,#9e42f5,#c16aff);border-color:transparent}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:18px}
-.card{background:rgba(17,9,27,.92);border:1px solid #34204a;border-radius:24px;overflow:hidden;box-shadow:0 12px 35px rgba(0,0,0,.22)}
-.thumb{width:100%;aspect-ratio:1.25/1;object-fit:cover;display:block}
-.cardbody{padding:14px}
-.cardtitle{font-size:15px;font-weight:800;line-height:1.35;margin-bottom:10px}
-.meta{display:flex;justify-content:space-between;color:#bba9ca;font-size:12px}
-.open{width:100%;margin-top:12px;border:0;border-radius:12px;padding:11px;background:linear-gradient(90deg,#963ef0,#bd63ff);color:white;font-weight:800}
-.drawer{position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;z-index:50}
-.drawer.open{display:block}
-.drawerpanel{width:min(86%,390px);height:100%;background:#0b0613;border-right:1px solid #39214e;padding:25px 20px}
-.drawerhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
-.drawer h2{font-size:24px}.close{background:none;border:0;color:#888;font-size:28px}
-.nav{display:block;padding:15px 8px;color:#d9c5ec;text-decoration:none;font-size:18px;border-radius:12px}
-.nav:hover{background:#1b0d2a}.social{margin-top:28px;color:#777;text-transform:uppercase;font-size:12px;letter-spacing:2px}
-.detail{display:none;padding:18px}.detail.show{display:block}.home.hide{display:none}
-.back{border:0;background:none;color:#d7b7ff;font-size:26px;margin-bottom:12px}
-.hero{border:1px solid #38204e;border-radius:22px;overflow:hidden;background:#10091b}
-.hero img{width:100%;display:block;max-height:430px;object-fit:cover}
-.detailbody{padding:18px}.detailtitle{font-size:24px;color:#c678ff;line-height:1.2;margin-bottom:12px}
-.desc{color:#c6b6d3;line-height:1.65;font-size:14px}
-.unlockbox{margin-top:20px;padding:18px;border:1px solid #3b2452;border-radius:20px;background:#130b20}
-.progress{height:9px;background:#2b1a3b;border-radius:999px;overflow:hidden;margin:12px 0}
-.fill{height:100%;width:0;background:linear-gradient(90deg,#8c38eb,#ca6bff);transition:.3s}
-.unlock{width:100%;padding:15px;border:0;border-radius:15px;background:linear-gradient(90deg,#a645f3,#c16aff);color:white;font-weight:900}
-.unlock:disabled{opacity:.5}
-.adnote{text-align:center;color:#8e7b9c;font-size:11px;margin-top:8px}
-.watchmore{width:100%;margin-top:15px;padding:14px;border:0;border-radius:15px;background:#21102f;color:#e8d7f5;font-weight:800}
-.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;
- background:#21132e;border:1px solid #4b2c65;color:#fff;padding:13px 16px;border-radius:14px;z-index:100;
- transition:.2s;width:min(90%,420px);text-align:center;font-size:13px}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:520px){.grid{grid-template-columns:1fr}.logo{font-size:22px}}
-</style>
+        .header {
+            background: var(--card-bg);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .user-info h3 {
+            font-size: 15px;
+        }
+
+        .user-info p {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .balance-card {
+            text-align: center;
+            margin: 30px 20px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid #334155;
+        }
+
+        .balance-title {
+            font-size: 13px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .balance-amount {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--gold-color);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 0 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tap-area {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .tap-btn {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #0284c7 0%, #0f172a 100%);
+            border: 4px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+            transition: transform 0.1s ease;
+        }
+
+        .tap-btn:active {
+            transform: scale(0.92);
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-item {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #334155;
+        }
+
+        .task-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .task-info i {
+            font-size: 22px;
+            color: var(--accent-color);
+        }
+
+        .btn-action {
+            background: var(--green-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-action:disabled {
+            background: #475569;
+            cursor: not-allowed;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--card-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #334155;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 11px;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--accent-color);
+        }
+
+        .nav-item i {
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
 
-<div class="app">
-  <header class="top">
-    <button class="iconbtn" id="menuBtn">☰</button>
-    <div class="logo">Video <span>• POINT</span></div>
-    <button class="search" id="searchBtn">⌕</button>
-  </header>
-
-  <main id="home" class="home">
-    <div class="tabs" id="tabs">
-      <button class="tab active" data-cat="All Videos">?
+    <div class="header">
+        <div class="avatar
