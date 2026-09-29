@@ -1,34 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Telegram Mini App</title>
+    <title>Media Flix BD</title>
+
     <!-- Telegram WebApp SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
+
+    <!-- Monetag SDK Tag -->
     <script src='//libtl.com/sdk.js' data-zone='11923640' data-sdk='show_11923640'></script>
-    
+
 </head>
-<body style="text-align: center; font-family: sans-serif; padding-top: 50px;">
+<body style="text-align: center; font-family: sans-serif; padding-top: 50px; background-color: #121212; color: #ffffff;">
 
-    <h1>Welcome to My Mini App</h1>
-    <p>Earn rewards by watching ads!</p>
+    <h1>Media Flix BD Mini App</h1>
+    <p>Watch ads to support us and earn rewards!</p>
 
-    <!-- Ad Show করার বাটন -->
-    <button id="ad-btn" style="padding: 12px 24px; font-size: 16px; background-color: #0088cc; color: white; border: none; border-radius: 8px;">
-        Watch Ad
+    <!-- 1. Rewarded Interstitial Button -->
+    <button id="reward-ad-btn" style="padding: 14px 24px; font-size: 15px; background-color: #0088cc; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 10px;">
+        Watch Interstitial Ad
+    </button>
+
+    <br><br>
+
+    <!-- 2. Rewarded Popup Button -->
+    <button id="popup-ad-btn" style="padding: 14px 24px; font-size: 15px; background-color: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 10px;">
+        Watch Popup Ad
     </button>
 
     <script>
-        // Telegram WebApp ইনিশিয়ালাইজ করা
+        // Telegram WebApp initialize
         const tg = window.Telegram.WebApp;
-        tg.expand(); // অ্যাপটি ফুলস্ক্রিন করা
+        tg.expand();
 
-        // বাটনে ক্লিক করলে কী হবে
-        document.getElementById('ad-btn').addEventListener('click', function() {
-            alert('Ad is loading...');
-            // Monetag Ad Call Function (এখানে আপনার অ্যাড দেখানোর ফাংশন থাকবে)
+        // 1. In-App Interstitial (অটোমেটিক ৫ সেকেন্ড পর চালু হবে)
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof show_11923640 === 'function') {
+                show_11923640({
+                    type: 'inApp',
+                    inAppSettings: {
+                        frequency: 2,
+                        capping: 0.1,
+                        interval: 30,
+                        timeout: 5,
+                        everyPage: false
+                    }
+                });
+            }
+        });
+
+        // 2. Rewarded Interstitial Ad Function (বাটন ক্লিক)
+        document.getElementById('reward-ad-btn').addEventListener('click', function() {
+            if (typeof show_11923640 === 'function') {
+                show_11923640().then(() => {
+                    alert('You have seen an ad!');
+                }).catch((error) => {
+                    alert('Ad is loading or not ready yet. Try again!');
+                });
+            } else {
+                alert('SDK is loading. Please wait a few seconds!');
+            }
+        });
+
+        // 3. Rewarded Popup Ad Function (বাটন ক্লিক)
+        document.getElementById('popup-ad-btn').addEventListener('click', function() {
+            if (typeof show_11923640 === 'function') {
+                show_11923640('pop').then(() => {
+                    alert('You have completed watching the Popup Ad!');
+                }).catch(e => {
+                    console.log('Error playing ad:', e);
+                });
+            } else {
+                alert('SDK is loading. Please wait a few seconds!');
+            }
         });
     </script>
 </body>
